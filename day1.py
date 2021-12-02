@@ -24,7 +24,7 @@ def part2(input):
 #        print("index {}, size {}".format(i, len(depths)))
         sum1 = int(depths[i]) + int(depths[i+1]) + int(depths[i+2])
         sum2 = int(depths[i+1]) + int(depths[i+2]) + int(depths[i+3])
-        print("Sum: {}".format(sum1))
+
         if sum2 > sum1 :
             count = count + 1
 
