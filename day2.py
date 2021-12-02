@@ -7,7 +7,7 @@ def part1(input):
 
     for item in directions:
         (direction,units) = item.split()
-        print("{}:{}".format(direction,units))
+#        print("{}:{}".format(direction,units))
         if direction == "forward":
             horiz = horiz + int(units)
 
