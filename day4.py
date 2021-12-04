@@ -32,7 +32,7 @@ class BingoGame:
 
     def print_boards(self):
         for board in self.boards:
-            print("Board id {} of total {} boards".format(id(board), len(self.boards)))
+            print("Board id {} of total {} boards round won {}".format(id(board), len(self.boards), board.round_won))
             board.print()
 
     def mark_boards(self, number):
@@ -41,18 +41,25 @@ class BingoGame:
 
     def check_win(self):
         for board in self.boards:
-            if board.check_win():
+            if board.check_win() and (board.round_won == 0 or board.round_won == self.round - 1):
+                board.round_won = self.round - 1
                 return board.sum_unmarked()
 
         return 0
 
+    def check_nowin(self):
+        for board in self.boards:
+            if not board.check_win():
+                return True
+
+        return False
+
 class BingoBoard:
-    spots_numbers = []
-    spots_marked = []
 
     def __init__(self):
         self.spots_numbers = []
         self.spots_marked = []
+        self.round_won = 0
 
     def mark_number(self, num):
         for i in range(len(self.spots_numbers)):
@@ -67,7 +74,6 @@ class BingoBoard:
             if False in self.spots_marked[i]:
                 winner = winner | False
             else:
-                print("Winner {}".format(self.spots_marked[i]))
                 winner = True
 
         for j in range(len(self.spots_marked[0])):
@@ -119,5 +125,22 @@ def part1(input):
             print("Game won in {} rounds - score {}".format(i,score))
             break
 
+
+    return str(score)
+
+def part2(input):
+    with open(input) as f:
+        input_lines = f.read().splitlines()
+
+    game = read_game(input_lines)
+    for i in range(len(game.numbers)):
+        game.play_round()
+        if game.check_win() > 0:
+            score = game.check_win() * game.last_called_number()
+            game.print_boards()
+            print("Game won in {} rounds last number {} - score {}".format(i+1,game.last_called_number(),score))
+
+        if not game.check_nowin():
+            break
 
     return str(score)

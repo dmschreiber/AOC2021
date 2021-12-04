@@ -18,3 +18,4 @@ if __name__ == '__main__':
 
     day4_input = "./data/day4.txt"
     print("Day 4 part 1:" + day4.part1(day4_input))
+    print("Day 4 part 2:" + day4.part2(day4_input))
