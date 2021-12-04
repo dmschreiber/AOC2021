@@ -26,7 +26,6 @@ class BingoGame:
 
     def play_round(self):
         number = self.numbers[self.round]
-        print("Playing number {}".format(number))
         self.mark_boards(number)
         self.round += 1
 
@@ -121,7 +120,6 @@ def part1(input):
         game.play_round()
         if game.check_win() > 0:
             score = game.check_win() * game.last_called_number()
-            game.print_boards()
             print("Game won in {} rounds - score {}".format(i,score))
             break
 
@@ -137,8 +135,7 @@ def part2(input):
         game.play_round()
         if game.check_win() > 0:
             score = game.check_win() * game.last_called_number()
-            game.print_boards()
-            print("Game won in {} rounds last number {} - score {}".format(i+1,game.last_called_number(),score))
+#            print("Game won in {} rounds last number {} - score {}".format(i+1,game.last_called_number(),score))
 
         if not game.check_nowin():
             break
