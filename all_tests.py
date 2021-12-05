@@ -2,6 +2,7 @@ import unittest
 import day2
 import day3
 import day4
+import day5
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -15,6 +16,9 @@ class MyTestCase(unittest.TestCase):
     def test_day4(self):
         self.assertEqual(day4.part1("./data/day4_test.txt"),"4512")
         self.assertEqual(day4.part2("./data/day4_test.txt"),"1924")
+    def test_day5(self):
+        self.assertEqual(day5.part1("./data/day5_test.txt"),"5")
+        # self.assertEqual(day5.part2("./data/day5_test.txt"),"10")
 
 if __name__ == '__main__':
     unittest.main()

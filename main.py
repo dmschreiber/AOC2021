@@ -2,6 +2,7 @@ import day1
 import day2
 import day3
 import day4
+import day5
 
 if __name__ == '__main__':
     day1_input = "./data/day1.txt"
@@ -19,3 +20,7 @@ if __name__ == '__main__':
     day4_input = "./data/day4.txt"
     print("Day 4 part 1:" + day4.part1(day4_input))
     print("Day 4 part 2:" + day4.part2(day4_input))
+
+    day5_input = "./data/day5.txt"
+    print("Day 5 part 1:" + day5.part1(day5_input))
+    # print("Day 5 part 2:" + day5.part2(day5_input))
