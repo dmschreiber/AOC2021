@@ -23,4 +23,4 @@ if __name__ == '__main__':
 
     day5_input = "./data/day5.txt"
     print("Day 5 part 1:" + day5.part1(day5_input))
-    # print("Day 5 part 2:" + day5.part2(day5_input))
+    print("Day 5 part 2:" + day5.part2(day5_input))

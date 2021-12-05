@@ -1,10 +1,18 @@
 def part1(input):
+    return generalized(input, True)
+
+def part2(input):
+    return generalized(input, False)
+
+def generalized(input, only_horizvert):
     with open(input) as f:
         input_lines = f.read().splitlines()
 
     lines = [line.split(" -> ") for line in input_lines]
     lines = [(line[0].split(","), line[1].split(",")) for line in lines]
-    lines = [line for line in lines if (line[0][0] == line[1][0] or line[0][1] == line[1][1])]
+
+    if only_horizvert:
+        lines = [line for line in lines if (line[0][0] == line[1][0] or line[0][1] == line[1][1])]
 
     map = {}
 
@@ -24,19 +32,29 @@ def part1(input):
         else:
             y_step = -1
 
-#        print("Draw {},{} -> {},{} (x_step: {}, y_step: {})".format(x1, y1, x2, y2,x_step, y_step))
-        for x in range(x1,x2+x_step,x_step):
-            for y in range(y1,y2+y_step, y_step):
-                key = "{},{}".format(x,y)
-                if key in map :
+        if x1 == x2 or y1 == y2:
+            for x in range(x1,x2+x_step,x_step):
+                for y in range(y1,y2+y_step, y_step):
+                    key = "{},{}".format(x,y)
+                    if key in map :
+                        map[key] = map[key] + 1
+                    else:
+                        map[key] = 1
+        else:
+#            print("Diag {},{} -> {},{}".format(x1,y1,x2,y2))
+            x = x1
+            y = y1
+            for i in range(x1,x2+x_step,x_step):
+                key = "{},{}".format(x, y)
+                if key in map:
                     map[key] = map[key] + 1
                 else:
                     map[key] = 1
+                x = x + x_step
+                y = y + y_step
 
     intersections = len([point for point in map.values() if point > 1])
-    print("There are {} intersections".format(intersections))
+    # print("There are {} intersections".format(intersections))
     return str(intersections)
 
-def part2(input):
-    with open(input) as f:
-        input_lines = f.read().splitlines()
+# part 2 19748 is too low
