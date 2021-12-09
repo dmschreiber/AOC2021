@@ -5,6 +5,7 @@ import day4
 import day5
 import day6
 import day7
+import day8
 
 if __name__ == '__main__':
     day1_input = "./data/day1.txt"
@@ -34,3 +35,7 @@ if __name__ == '__main__':
     day7_input = "./data/day7.txt"
     print("Day 7 part 1:" + day7.part1(day7_input))
     print("Day 7 part 2:" + day7.part2(day7_input))
+
+    day8_input = "./data/day8.txt"
+    print("Day 8 part 1:" + day8.part1(day8_input))
+    print("Day 8 part 2:" + day8.part2(day8_input))
