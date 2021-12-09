@@ -38,10 +38,14 @@ def create_map(digits):
             map[sorted_digit] = "8"
             reverse_map["8"] = sorted_digit
 
+    abdeg = [l for l in reverse_map["8"] if not(l in reverse_map["1"])]
+    bd = [l for l in reverse_map["4"] if not(l in reverse_map["1"])]
+    a = [l for l in reverse_map["7"] if not(l in reverse_map["1"])]
+
     # 6
     for digit in digits:
         sorted_digit = "".join(sorted(digit))
-        if not (reverse_map["1"][0:1] in digit and reverse_map["1"][1:2] in digit):
+        if len ([l for l in reverse_map["1"] if not (l in sorted_digit)]) > 0 :
             if len(digit) == 6:
                 map[sorted_digit] = "6"
                 reverse_map["6"] = sorted_digit
@@ -52,7 +56,7 @@ def create_map(digits):
     for digit in digits:
         sorted_digit = "".join(sorted(digit))
         if not(sorted_digit in map.keys()) :
-            if not (reverse_map["1"][0:1] in digit and reverse_map["1"][1:2] in digit):
+            if len([l for l in reverse_map["1"] if not (l in sorted_digit)]) > 0:
                 if len(digit) == 5 and c in digit:
                     map[sorted_digit] = "2"
                     reverse_map["2"] = sorted_digit
@@ -69,6 +73,7 @@ def create_map(digits):
                 reverse_map["3"] = sorted_digit
 
     e = [l for l in reverse_map["2"] if not (l in reverse_map["3"])][0]
+    f = [l for l in reverse_map["3"] if not (l in reverse_map["2"])][0]
 
     for digit in digits:
         sorted_digit = "".join(sorted(digit))
@@ -104,6 +109,5 @@ def part2(input):
             n = n+ map[sorted_output]
 
         total = total + int(n)
-    print("{}".format(total))
 
     return str(total)
