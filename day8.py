@@ -2,8 +2,8 @@ def part1(input):
     with open(input) as f:
         input_lines = f.read().splitlines()
 
-    inputs = [ line.split("|")[0].split() for line in input_lines]
-    outputs = [ line.split("|")[1].split() for line in input_lines]
+    inputs = [line.split("|")[0].split() for line in input_lines]
+    outputs = [line.split("|")[1].split() for line in input_lines]
 
     count = 0
     for o in outputs :
@@ -42,7 +42,7 @@ def create_map(digits):
     bd = [l for l in reverse_map["4"] if not(l in reverse_map["1"])]
     a = [l for l in reverse_map["7"] if not(l in reverse_map["1"])]
 
-    # 6
+    # 6 is length six and without the digits of 1
     for digit in digits:
         sorted_digit = "".join(sorted(digit))
         if len ([l for l in reverse_map["1"] if not (l in sorted_digit)]) > 0 :
@@ -75,16 +75,18 @@ def create_map(digits):
     e = [l for l in reverse_map["2"] if not (l in reverse_map["3"])][0]
     f = [l for l in reverse_map["3"] if not (l in reverse_map["2"])][0]
 
+    # 9 is eight without segment e
+    nine = "".join([l for l in reverse_map["8"] if l != e])
+    map[nine] = "9"
+    reverse_map["9"] = nine
+
+    # only zero is left
     for digit in digits:
         sorted_digit = "".join(sorted(digit))
         if not(sorted_digit in map.keys()) :
             if len(digit) == 6 and e in digit:
                 map[sorted_digit] = "0"
                 reverse_map["0"] = sorted_digit
-            else :
-                map[sorted_digit] = "9"
-                reverse_map["9"] = sorted_digit
-
 
     # for k in map.keys() :
     #    print("- {}: {}".format(k, map[k]))
