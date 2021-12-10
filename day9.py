@@ -82,14 +82,14 @@ def part2(input):
     for i in range(len(map)) :
         for j in range(len(map[i])) :
             if is_lowest(map, i, j) :
-                print("Low point {},{}" .format(i,j))
+#                print("Low point {},{}" .format(i,j))
                 low_points[(i,j)] = sum_basin(map, i, j)
 
     sizes = [len(l) for l in low_points.values()]
     sizes.sort(reverse=True)
 
-    for k, v in low_points.items() :
-        print("{} : {}".format(k, len(v)))
+#    for k, v in low_points.items() :
+#        print("{} : {}".format(k, len(v)))
 
-    print("Sizes {}".format(sizes))
+#   print("Sizes {}".format(sizes))
     return str(sizes[0]*sizes[1]*sizes[2])
