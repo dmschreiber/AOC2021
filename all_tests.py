@@ -8,6 +8,7 @@ import day7
 import day8
 import day9
 import day10
+import day11
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -45,5 +46,20 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(day10.part1("./data/day10_test.txt"),"26397")
         self.assertEqual(day10.part2("./data/day10_test.txt"),"288957")
 
+    def test_day11(self):
+        map = day11.read_map("./data/day11_test.txt")
+        after_step1 =day11.read_map("./data/day11_test_afterstep2.txt")
+
+        print("{}\n{}".format(map, after_step1))
+        count = 0
+#        print("Step 1")
+        (map,count) = day11.step(map,count)
+#        day11.print_map(map)
+#        print("Step 2")
+        (map,count) = day11.step(map,count)
+#        day11.print_map(map)
+        self.assertEqual(map,after_step1)
+        self.assertEqual(day11.part1("./data/day11_test.txt"),"1656")
+        self.assertEqual(day11.part2("./data/day11_test.txt"),"195")
 if __name__ == '__main__':
     unittest.main()
