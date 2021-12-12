@@ -23,15 +23,12 @@ def find_path(map, spot, path=None):
 
 
 def path_has_two_small_caves(path):
-    small_caves = [spot for spot in path if is_small(spot)]
-    frequency = collections.Counter(small_caves)
-    m = max(dict(frequency).values())
 
-    if m > 1:
-        return True
-    else:
-        return False
+    for cave in path:
+        if is_small(cave) and path.count(cave) > 1:
+            return True
 
+    return False
 
 def part2_path(map,spot,path=None):
     if path is None:
@@ -43,8 +40,9 @@ def part2_path(map,spot,path=None):
         for node in map[spot]:
             if node == "start":
                 continue
-            if is_small(node) and path_has_two_small_caves(path) and node in path:
-                continue
+            if is_small(node) and node in path:
+                if path_has_two_small_caves(path) :
+                    continue
             for result in part2_path(map, node, path + [node]):
                 yield result
 

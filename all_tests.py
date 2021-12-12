@@ -1,4 +1,6 @@
 import unittest
+import time
+
 import day2
 import day3
 import day4
@@ -73,7 +75,10 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(day12.path_has_two_small_caves(["start", "W","a","W","a"]),True)
 
         self.assertEqual(day12.part1("./data/day12_test.txt"),"226")
+        start_time = time.perf_counter()
         self.assertEqual(day12.part2("./data/day12_test.txt"),"3509")
+        end_time = time.perf_counter()
+        print(f"Day 12 part 2 execution Time : {end_time - start_time:0.6f}")
 
 if __name__ == '__main__':
     unittest.main()
