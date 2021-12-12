@@ -9,6 +9,7 @@ import day8
 import day9
 import day10
 import day11
+import day12
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -61,5 +62,18 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(map,after_step1)
         self.assertEqual(day11.part1("./data/day11_test.txt"),"1656")
         self.assertEqual(day11.part2("./data/day11_test.txt"),"195")
+
+    def test_day12(self):
+        self.assertEqual(day12.is_small("start"),True)
+        self.assertEqual(day12.is_small("hw"),True)
+        self.assertEqual(day12.is_small("WI"),False)
+
+        self.assertEqual(day12.path_has_two_small_caves(["start","W","a","a"]),True)
+        self.assertEqual(day12.path_has_two_small_caves(["start","W","b","a"]),False)
+        self.assertEqual(day12.path_has_two_small_caves(["start", "W","a","W","a"]),True)
+
+        self.assertEqual(day12.part1("./data/day12_test.txt"),"226")
+        self.assertEqual(day12.part2("./data/day12_test.txt"),"3509")
+
 if __name__ == '__main__':
     unittest.main()
