@@ -12,6 +12,7 @@ import day9
 import day10
 import day11
 import day12
+import day13
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -79,6 +80,10 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(day12.part2("./data/day12_test.txt"),"3509")
         end_time = time.perf_counter()
         print(f"Day 12 part 2 execution Time : {end_time - start_time:0.6f}")
+
+    def test_day13(self):
+        self.assertEqual(day13.part1("./data/day13_test.txt"),"17")
+        self.assertEqual(day13.part2("./data/day13_test.txt"),"")
 
 if __name__ == '__main__':
     unittest.main()
