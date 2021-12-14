@@ -13,6 +13,7 @@ import day10
 import day11
 import day12
 import day13
+import day14
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -84,6 +85,11 @@ class MyTestCase(unittest.TestCase):
     def test_day13(self):
         self.assertEqual(day13.part1("./data/day13_test.txt"),"17")
         self.assertEqual(day13.part2("./data/day13_test.txt"),"")
+
+    def test_day14(self):
+        self.assertEqual(day14.score_polymer("NNCB"),1)
+        self.assertEqual(day14.part1("./data/day14_test.txt"),"1588")
+        self.assertEqual(day14.part2("./data/day14_test.txt"),"2188189693529")
 
 if __name__ == '__main__':
     unittest.main()
