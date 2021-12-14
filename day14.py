@@ -32,7 +32,7 @@ def expand_v2(map, frequency, end):
             else:
                 new_frequency[right_segment] = frequency[key]
 
-    print(f"{len(frequency)} pairs")
+    # print(f"{len(frequency)} pairs")
 
     letter_frquency = {}
     for key in new_frequency.keys():
@@ -48,7 +48,7 @@ def expand_v2(map, frequency, end):
         letter_frquency[end] = 1
 
     score = max(letter_frquency.values()) - min(letter_frquency.values())
-    print(f"{len(letter_frquency)} letters score {score}")
+    # print(f"{len(letter_frquency)} letters score {score}")
 
     return(new_frequency, end, score)
 
@@ -75,7 +75,7 @@ def score_polymer(polymer):
     items = list(polymer)
     most_frequent = max(set(items), key=items.count)
     least_frequent = min(set(items), key=items.count)
-    print("Most frequent: {}, Least: {}".format(most_frequent,least_frequent))
+    # print("Most frequent: {}, Least: {}".format(most_frequent,least_frequent))
     score = sum([1 for i in items if i == most_frequent])-sum([1 for i in items if i == least_frequent])
 
     return(score)
