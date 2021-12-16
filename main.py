@@ -13,6 +13,7 @@ import day11
 import day12
 import day13
 import day14
+import day15
 
 if __name__ == '__main__':
     day1_input = "./data/day1.txt"
@@ -73,3 +74,7 @@ if __name__ == '__main__':
     day14_input = "./data/day14.txt"
     print("Day 14 part 1:" + day14.part1(day14_input))
     print("Day 14 part 2:" + day14.part2(day14_input))
+
+    day15_input = "./data/day15.txt"
+    print("Day 15 part 1:" + day15.part1(day15_input))
+    print("Day 15 part 2:" + day15.part2(day15_input))
