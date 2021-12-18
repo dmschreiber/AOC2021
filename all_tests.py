@@ -15,6 +15,7 @@ import day12
 import day13
 import day14
 import day15
+import day16
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -95,6 +96,13 @@ class MyTestCase(unittest.TestCase):
     def test_day15(self):
         self.assertEqual(day15.part1("./data/day15_test.txt"),"40")
         self.assertEqual(day15.part2("./data/day15_test.txt"),"315")
+
+    def test_day16(self):
+        self.assertEqual(day16.hex_to_bin("D2FE28"),"110100101111111000101000")
+        self.assertEqual(day16.parse_packet("110100101111111000101000"),(6,21))
+        self.assertEqual(day16.parse_packet(day16.hex_to_bin("38006F45291200")),(9,49))
+        self.assertEqual(day16.parse_packet(day16.hex_to_bin("EE00D40C823060")),(14,51))
+        self.assertEqual(day16.part1("./data/day16_test.txt"),"31")
 
 if __name__ == '__main__':
     unittest.main()
