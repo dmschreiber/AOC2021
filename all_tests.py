@@ -99,9 +99,26 @@ class MyTestCase(unittest.TestCase):
 
     def test_day16(self):
         self.assertEqual(day16.hex_to_bin("D2FE28"),"110100101111111000101000")
-        self.assertEqual(day16.parse_packet("110100101111111000101000"),(6,21))
-        self.assertEqual(day16.parse_packet(day16.hex_to_bin("38006F45291200")),(9,49))
-        self.assertEqual(day16.parse_packet(day16.hex_to_bin("EE00D40C823060")),(14,51))
+        v,l,p = day16.parse_packet("110100101111111000101000")
+        self.assertEqual((v,l), (6,21))
+        self.assertEqual(p[0].eval(),2021)
+
+        v,l,p = day16.parse_packet(day16.hex_to_bin("38006F45291200"))
+        self.assertEqual(v,p[0].sum_versions())
+        self.assertEqual((v,l),(9,49))
+
+        v,l,p = day16.parse_packet(day16.hex_to_bin("EE00D40C823060"))
+        self.assertEqual(v,p[0].sum_versions())
+        self.assertEqual((v,l),(14,51))
+
+        v,l,p = day16.parse_packet(day16.hex_to_bin("C200B40A82"))
+        self.assertEqual(p[0].eval(),3)
+
+        tests = {"04005AC33890": 54, "880086C3E88112": 7, "CE00C43D881120": 9, "D8005AC2A8F0": 1, "F600BC2D8F": 0, "9C005AC2F8F0": 0, "9C0141080250320F1802104A08": 1}
+        for h in tests.keys():
+            v,l,p = day16.parse_packet(day16.hex_to_bin(h))
+            self.assertEqual(p[0].eval(),tests[h])
+
         self.assertEqual(day16.part1("./data/day16_test.txt"),"31")
 
 if __name__ == '__main__':
