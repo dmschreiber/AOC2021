@@ -16,6 +16,7 @@ import day13
 import day14
 import day15
 import day16
+import day17
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -120,6 +121,16 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(p[0].eval(),tests[h])
 
         self.assertEqual(day16.part1("./data/day16_test.txt"),"31")
+
+    def test_day17(self):
+        self.assertEqual(day17.get_target_area("target area: x=20..30, y=-10..-5"),(20,30,-10,-5))
+        p = day17.get_path(7,2,"target area: x=20..30, y=-10..-5")
+        print("Path {}".format(p))
+        self.assertTrue(day17.test_path(p,"target area: x=20..30, y=-10..-5"))
+        p = day17.get_path(6,3,"target area: x=20..30, y=-10..-5")
+        print("Path {}".format(p))
+        self.assertTrue(day17.test_path(p,"target area: x=20..30, y=-10..-5"))
+        self.assertEqual(day17.part1("./data/day17_test.txt"),"45")
 
 if __name__ == '__main__':
     unittest.main()
