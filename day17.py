@@ -25,7 +25,7 @@ def get_path(v_x, v_y, target_area):
     min_x, max_x, min_y, max_y = get_target_area(target_area)
     x = 0
     y = 0
-    while (x <= max_x and y >= max_y):
+    while (x <= max_x and y >= min_y):
         x += v_x
         y += v_y
         if v_x > 0:
@@ -45,22 +45,35 @@ def part1(input):
         target_area = f.read().splitlines()
 
     max_y = 0
-    for v_x in range(1,30):
-        for v_y in range(1,500):
+    for v_x in range(-30,30):
+        for v_y in range(-500,500):
             p = get_path(v_x, v_y, target_area[0])
             if test_path(p, target_area[0]):
                 path_max_y = max([p[i][1] for i in range(len(p))])
                 if path_max_y > max_y:
                     max_y = path_max_y
-                print("Found path {} max_y {}".format((v_x,v_y),path_max_y))
+#                print("Found path {} max_y {}".format((v_x,v_y),path_max_y))
 
     return str(max_y)
 
 def part2(input):
     with open(input) as f:
-        depths = f.read().splitlines()
+        target_area = f.read().splitlines()
+
+    max_y = 0
     count = 0
-
-
-
-    return(str(count))
+    paths = []
+    for v_x in range(0,178):
+        for v_y in range(-107,150):
+            p = get_path(v_x, v_y, target_area[0])
+            if test_path(p, target_area[0]):
+                path_max_y = max([p[i][1] for i in range(len(p))])
+                if path_max_y > max_y:
+                    max_y = path_max_y
+                count +=1
+                paths.append((str(v_x),str(v_y)))
+                print("Found path {} max_y {}".format((v_x,v_y),path_max_y))
+# 402 is too low
+    # 858 too low
+    # 2082 too low
+    return paths

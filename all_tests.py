@@ -123,6 +123,12 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(day16.part1("./data/day16_test.txt"),"31")
 
     def test_day17(self):
+        with open("./data/day17_test2.txt") as f:
+            path_lines = f.read().splitlines()
+        paths = []
+        for path in path_lines:
+            paths.append((path.split(", ")[0],path.split(", ")[1]))
+
         self.assertEqual(day17.get_target_area("target area: x=20..30, y=-10..-5"),(20,30,-10,-5))
         p = day17.get_path(7,2,"target area: x=20..30, y=-10..-5")
         print("Path {}".format(p))
@@ -130,7 +136,20 @@ class MyTestCase(unittest.TestCase):
         p = day17.get_path(6,3,"target area: x=20..30, y=-10..-5")
         print("Path {}".format(p))
         self.assertTrue(day17.test_path(p,"target area: x=20..30, y=-10..-5"))
+        p = day17.get_path(7,-1,"target area: x=20..30, y=-10..-5")
+        print("Path {}".format(p))
+        self.assertTrue(day17.test_path(p,"target area: x=20..30, y=-10..-5"))
+
+        p = day17.get_path(6,0,"target area: x=20..30, y=-10..-5")
+        print("Path {}".format(p))
+        self.assertTrue(day17.test_path(p,"target area: x=20..30, y=-10..-5"))
+
         self.assertEqual(day17.part1("./data/day17_test.txt"),"45")
+        answer_paths = day17.part2("./data/day17_test.txt")
+        for p in paths:
+            if not p in answer_paths:
+                print("Missing {}".format(p))
+        self.assertEqual(len(day17.part2("./data/day17_test.txt")),112)
 
 if __name__ == '__main__':
     unittest.main()
