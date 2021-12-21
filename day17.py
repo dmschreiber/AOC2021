@@ -72,7 +72,7 @@ def part2(input):
                     max_y = path_max_y
                 count +=1
                 paths.append((str(v_x),str(v_y)))
-                print("Found path {} max_y {}".format((v_x,v_y),path_max_y))
+#                print("Found path {} max_y {}".format((v_x,v_y),path_max_y))
 # 402 is too low
     # 858 too low
     # 2082 too low

@@ -17,6 +17,7 @@ import day14
 import day15
 import day16
 import day17
+import day18
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -150,6 +151,26 @@ class MyTestCase(unittest.TestCase):
             if not p in answer_paths:
                 print("Missing {}".format(p))
         self.assertEqual(len(day17.part2("./data/day17_test.txt")),112)
+
+    def test_day18(self):
+        self.assertEqual(day18.add_nums("[1,1]","[2,2]"),"[[1,1],[2,2]]")
+        result = day18.reduce("[[[[[9,8],1],2],3],4]")
+        self.assertEqual(result,"[[[[0,9],2],3],4]")
+        result = day18.reduce("[7,[6,[5,[4,[3,2]]]]]")
+        self.assertEqual(result,"[7,[6,[5,[7,0]]]]")
+        result = day18.reduce("[[6,[5,[4,[3,2]]]],1]")
+        self.assertEqual(result,"[[6,[5,[7,0]]],3]")
+        result = day18.reduce("[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]")
+        self.assertEqual(result,"[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]")
+        result = day18.split_num("[[[[0,7],4],[15,[0,13]]],[1,1]]")
+        self.assertEqual(result,"[[[[0,7],4],[[7,8],[0,13]]],[1,1]]")
+        self.assertEqual(day18.part1("./data/day18_test.txt"),4140)
+
+        self.assertEqual(day18.magnitude("[9,1]"),29)
+        self.assertEqual(day18.magnitude("[1,9]"), 21)
+        self.assertEqual(day18.magnitude("[[9,1],[1,9]]"),129)
+        self.assertEqual(day18.magnitude("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"),1384)
+        self.assertEqual(day18.magnitude("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]"), 3488)
 
 if __name__ == '__main__':
     unittest.main()
