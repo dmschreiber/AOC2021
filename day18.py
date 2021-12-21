@@ -27,7 +27,7 @@ def magnitude(num):
 
     inside_num = num[1:len(num)-1]
     count = 0
-    print("Checking inside_num {}".format(inside_num))
+
     for i in range(len(inside_num)):
         if count == 0 and inside_num[i] == ",":
             left_part = inside_num[:i]
@@ -58,8 +58,6 @@ def explode(num):
             left_part = num[:i - 1]
             right_part = num[num.find("]", i) + 1:]
             middle_part = num[i:num.find("]", i)]
-            print("{}  {}  {}".format(left_part, middle_part, right_part))
-            print("Middle part {}".format(middle_part))
             left_num = int(middle_part.split(",")[0])
             right_num = int(middle_part.split(",")[1])
             first_num = re.findall(r'\d+', right_part)
@@ -111,9 +109,17 @@ def part1(input):
 
 def part2(input):
     with open(input) as f:
-        depths = f.read().splitlines()
-    count = 0
+        nums = f.read().splitlines()
 
+    largest_mag = 0
+    for i in range(len(nums)):
+        for j in range(len(nums)):
+            sum_mag = magnitude(add_nums(nums[i], nums[j]))
+            if sum_mag > largest_mag:
+                largest_mag = sum_mag
+
+    print("Largest mag {}".format(largest_mag))
+    return(largest_mag)
 
 
     return(str(count))

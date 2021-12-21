@@ -172,5 +172,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(day18.magnitude("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"),1384)
         self.assertEqual(day18.magnitude("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]"), 3488)
 
+        self.assertEqual(day18.part2("./data/day18_test.txt"), 3993)
+
 if __name__ == '__main__':
     unittest.main()
