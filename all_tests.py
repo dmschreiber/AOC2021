@@ -18,6 +18,7 @@ import day15
 import day16
 import day17
 import day18
+import day19
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -173,6 +174,10 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(day18.magnitude("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]"), 3488)
 
         self.assertEqual(day18.part2("./data/day18_test.txt"), 3993)
+
+    def test_day19(self):
+        self.assertEqual(day19.part1("./data/day19_test.txt"), "79")
+
 
 if __name__ == '__main__':
     unittest.main()
