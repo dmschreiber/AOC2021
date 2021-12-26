@@ -1,5 +1,6 @@
 import re
 import itertools
+import time
 
 
 def transform(scanner):
@@ -168,33 +169,35 @@ def register_scanner(source,target):
 def find_offset(offset, pairs, scanners,which_scanner):
     found_scanner = False
 
-    if which_scanner in [o[1][0] for o in offset.keys()]:
+    if which_scanner == 0:
+        i = 0
+        t = 0
+        found_scanner = True
+
+    elif which_scanner in [o[1][0] for o in offset.keys()]:
         i = which_scanner
         t = [o[1][1] for o in offset.keys() if o[1][0] == which_scanner][0]
         found_scanner = True
 
-    # for ((i,t),(j,u)) in offset.keys():
-    #     if j == which_scanner:
-    #         i = j
-    #         t = u
-    #         found_scanner = True
-    #         break
-
     if found_scanner:
         print("checking for matches with {}-{}".format(i,t))
         for j in range(len(scanners)):
-            if i != j and (i, j) not in [(mapping[1][0], mapping[0][0]) for mapping in offset.keys()]:
+            if i != j and j not in [mapping[1][0] for mapping in offset.keys()]:
                 for u in range(len(pairs[j])):
                     if ((i,t),(j,u)) not in checked_scanners:
-                        matches = match_pairs(pairs[i][t], pairs[j][u])
                         register_scanner((i,t),(j,u))
 
-                        if matches >= 12:
-                            p = create_matches(pairs[i][t], pairs[j][u])
-                            if p is not None:
-                                print("Scanner {} t {} with scanner {} t {} is {}".format(i, t, j, u, p))
-                                yield ((i,t),(j,u)),p
-                                break
+                        p = create_matches(pairs[i][t], pairs[j][u])
+                        if p is not None:
+                            print("Scanner {} t {} with scanner {} t {} is {}".format(i, t, j, u, p))
+
+                            new_offset = offset.copy()
+                            new_offset[ ((i,t),(j,u))] = p
+                            yield ((i,t),(j,u)),p
+                            if j not in [o[0][0] for o in offset.keys()]:
+                                for n in find_offset(new_offset, pairs, scanners, j):
+                                    yield n
+                            break
 
 
 def part1(input):
@@ -204,6 +207,7 @@ def part1(input):
     scanner_index=0
     pairs = [] # one per scanner
 
+    start_time = time.perf_counter()
     for s in scanners:
         pairs.append([])
         transform_count = 0
@@ -212,36 +216,15 @@ def part1(input):
             transform_count += 1
 
         scanner_index = scanner_index + 1
+    end_time = time.perf_counter()
+    print(f"Part 15.1 time : {end_time - start_time:0.6f}s")
 
 
     offset = {}
-    i = 0
-    for j in range(1,len(scanners)):
-        t = 0
-        for u in range(len(pairs[j])):
-            matches = match_pairs(pairs[i][t],pairs[j][u])
-            register_scanner((i,t),(j,u))
-            if matches >= 12:
-                p = create_matches(pairs[i][t],pairs[j][u])
-                if p is not None:
-                    offset[((i,t),(j,u))] = p
-                    print("Scanner {} t {} with scanner {} t {} is {}".format(i,t,j,u,p))
-                    for i_t_j_u, p in find_offset(offset, pairs, scanners, j):
-                        if p is not None:
-                            offset[i_t_j_u] = p
-
-                    break
-
-    p=(1,1,1)
-
-    match_count = 0
-    while match_count != len(offset):
-        match_count = len(offset)
-        for scanner_index in range(1,len(scanners)):
-            if scanner_index not in [o[0][0] for o in offset.keys()]:
-                for i_t_j_u, p in find_offset(offset, pairs, scanners,scanner_index):
-                    if p is not None:
-                        offset[i_t_j_u] = p
+    for i_t_j_u, p in find_offset(offset, pairs, scanners, 0):
+        offset[i_t_j_u] = p
+    end_time = time.perf_counter()
+    print(f"Part 15.2 time : {end_time - start_time:0.6f}s")
 
     points = [(p[0],p[1],p[2]) for p in scanners[0]]
 
@@ -258,13 +241,11 @@ def part1(input):
                 points.append(p)
 
     points.sort(key=lambda p: (p[0],p[1],p[2]))
-    for p in points:
-        print(p)
+    end_time = time.perf_counter()
+    print(f"Part 15.3 time : {end_time - start_time:0.6f}s")
 
     biggest_manhattan_distance = 0
 
-    for s in positions_of_scanners.keys():
-        print("scanner {} - {}".format(s,positions_of_scanners[s]))
     for i in positions_of_scanners.values():
         for j in positions_of_scanners.values():
             distance = abs(i[0]-j[0])+abs(i[1]-j[1])+abs(i[2]-j[2])
@@ -272,8 +253,9 @@ def part1(input):
                 biggest_manhattan_distance = distance
 
     print("Biggest Manhattan Distance between scanners is {}".format(biggest_manhattan_distance))
+    end_time = time.perf_counter()
+    print(f"Part 15.4 time : {end_time - start_time:0.6f}s")
 
-    # 9598 too low
     return(str(len(points)))
 
 

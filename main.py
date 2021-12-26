@@ -20,6 +20,11 @@ import day18
 import day19
 
 if __name__ == '__main__':
+    day19_input = "./data/day19.txt"
+    print("Day 19 part 1: {}".format(day19.part1(day19_input)))
+
+    exit(0)
+
     day1_input = "./data/day1.txt"
     print("Day 1 part 1:" + day1.part1(day1_input))
     print("Day 1 part 2:" + day1.part2(day1_input))
@@ -99,5 +104,3 @@ if __name__ == '__main__':
     print("Day 18 part 1: {}".format(day18.part1(day18_input)))
     print("Day 18 part 2: {}".format(day18.part2(day18_input)))
 
-    day19_input = "./data/day19.txt"
-    print("Day 19 part 1: {}".format(day19.part1(day19_input)))
