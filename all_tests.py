@@ -19,6 +19,7 @@ import day16
 import day17
 import day18
 import day19
+import day20
 
 class MyTestCase(unittest.TestCase):
     def test_day1(self):
@@ -175,9 +176,17 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(day18.part2("./data/day18_test.txt"), 3993)
 
-    def test_day19(self):
-        self.assertEqual(day19.part1("./data/day19_test.txt"), "79")
+    # def test_day19(self):
+        # self.assertEqual(day19.part1("./data/day19_test.txt"), "79")
 
+    def test_day20(self):
+        decoder, image = day20.read_input("./data/day20_test.txt")
+        self.assertEqual(day20.which_spot_in_decoder(image,2,2, 0),34)
+        self.assertEqual(day20.process(image, decoder, 2, 2, 0),1)
+        self.assertEqual(day20.process(image,decoder,-1,-1, 0),0)
+
+        self.assertEqual(day20.part1("./data/day20_test.txt"), 35)
+        self.assertEqual(day20.part2("./data/day20_test.txt"), 3351)
 
 if __name__ == '__main__':
     unittest.main()

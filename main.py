@@ -18,12 +18,19 @@ import day16
 import day17
 import day18
 import day19
+import day20
 
 if __name__ == '__main__':
+    day20_input = "./data/day20.txt"
+    print("Day 20 part 1: {}".format(day20.part1(day20_input)))
+    #5846
+    print("Day 20 part 2: {}".format(day20.part2(day20_input)))
+    # 46904 too high
+    # 21290 too high
+    exit(0)
+
     day19_input = "./data/day19.txt"
     print("Day 19 part 1: {}".format(day19.part1(day19_input)))
-
-    exit(0)
 
     day1_input = "./data/day1.txt"
     print("Day 1 part 1:" + day1.part1(day1_input))
