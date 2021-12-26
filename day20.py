@@ -10,7 +10,7 @@ def part2(input):
 def run_sumulation(input, iterations):
     decoder, image = read_input(input)
 
-    print_image(image)
+    # print_image(image)
 
     for step in range(iterations):
         new_image = {}
@@ -23,17 +23,17 @@ def run_sumulation(input, iterations):
         #     for col in range(-1*step-1,original_max_col+step+2):
         #         new_image[(row,col)] = process(image,decoder,row,col,step)
 
-        for row in range(-100,200):
-            for col in range(-100,200):
+        # what is the smallest possible working range?
+        for row in range(-2*iterations,original_max_row+iterations*2):
+            for col in range(-2*iterations,original_max_col+iterations*2):
                 new_image[(row,col)] = process(image,decoder,row,col,step)
 
 
         image = new_image
-    print_image(image)
+    # print_image(image)
 
     # return the magic number
-    old_count = sum([i for i in image.values()])
-    print("old count {}".format(old_count))
+
     count = 0
     for row in range(-1*iterations,original_max_row+iterations+1):
         for col in range(-1*iterations,original_max_col+iterations+1):
@@ -100,19 +100,6 @@ def process(image,decoder,my_row,my_col,step):
 
 
 def get_pixel(image, my_col, my_row, step):
-    # if my_row < -1*step-1 or my_row > original_max_row+step+2:
-    #     if int(step/2) == step/2:
-    #         return 0
-    #     else:
-    #         return decoder[0]
-    #
-    # if my_col < -1*step-1 or my_col > original_max_col+step+2:
-    #     if int(step/2) == step/2:
-    #         return 0
-    #     else:
-    #         return decoder[0]
-
-
     if (my_row,my_col) in image.keys():
         return image[(my_row, my_col)]
     else:
