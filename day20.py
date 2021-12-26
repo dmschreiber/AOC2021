@@ -3,7 +3,7 @@ def part1(input):
 
 
 def part2(input):
-    return run_sumulation(input, 2)
+    return run_sumulation(input, 50)
 
 
 
@@ -23,13 +23,13 @@ def run_sumulation(input, iterations):
         #     for col in range(-1*step-1,original_max_col+step+2):
         #         new_image[(row,col)] = process(image,decoder,row,col,step)
 
-        for row in range(min_row-5,max_row+5):
-            for col in range(min_row-5,max_col+5):
+        for row in range(-100,200):
+            for col in range(-100,200):
                 new_image[(row,col)] = process(image,decoder,row,col,step)
 
 
         image = new_image
-        print_image(image)
+    print_image(image)
 
     # return the magic number
     old_count = sum([i for i in image.values()])

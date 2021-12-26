@@ -27,6 +27,7 @@ if __name__ == '__main__':
     print("Day 20 part 2: {}".format(day20.part2(day20_input)))
     # 46904 too high
     # 21290 too high
+
     exit(0)
 
     day19_input = "./data/day19.txt"
