@@ -24,8 +24,12 @@ import day21
 
 if __name__ == '__main__':
     day21_input = "./data/day21.txt"
+    start_time = time.perf_counter()
     print("Day 21 part 1: {}".format(day21.part1(day21_input)))
     print("Day 21 part 2: {}".format(day21.part2(day21_input)))
+    end_time = time.perf_counter()
+    print(f"Day 21 execution Time : {end_time - start_time:0.6f}s")
+
 
     exit(0)
 
