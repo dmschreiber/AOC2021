@@ -20,8 +20,14 @@ import day17
 import day18
 import day19
 import day20
+import day21
 
 class MyTestCase(unittest.TestCase):
+    def test_day21(self):
+        self.assertEqual(day21.part1("./data/day21_test.txt"),"739785")
+
+        self.assertEqual(day21.part2("./data/day21_test.txt"),"444356092776315")
+
     def test_day1(self):
         self.assertEqual(day2.part1("./data/day2_test.txt"),"150")
         self.assertEqual(day2.part2("./data/day2_test.txt"),"900")

@@ -19,8 +19,16 @@ import day17
 import day18
 import day19
 import day20
+import day21
+
 
 if __name__ == '__main__':
+    day21_input = "./data/day21.txt"
+    print("Day 21 part 1: {}".format(day21.part1(day21_input)))
+    print("Day 21 part 2: {}".format(day21.part2(day21_input)))
+
+    exit(0)
+
     day20_input = "./data/day20.txt"
     print("Day 20 part 1: {}".format(day20.part1(day20_input)))
     #5846
@@ -28,7 +36,6 @@ if __name__ == '__main__':
     # 46904 too high
     # 21290 too high
 
-    exit(0)
 
     day19_input = "./data/day19.txt"
     print("Day 19 part 1: {}".format(day19.part1(day19_input)))
