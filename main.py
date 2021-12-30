@@ -21,13 +21,18 @@ import day19
 import day20
 import day21
 import day22
+import day23
 
 
 if __name__ == '__main__':
+    day23_input = "./data/day23.txt"
+    # print("Day 23 part 1: {}".format(day23.part1(day23_input)))
+    print("Day 23 part 2: {}".format(day23.part2(day23_input)))
+    exit(0)
+
     day22_input = "./data/day22.txt"
     print("Day 22 part 1: {}".format(day22.part1(day22_input)))
     print("Day 22 part 2: {}".format(day22.part2(day22_input)))
-    exit(0)
 
     day21_input = "./data/day21.txt"
     start_time = time.perf_counter()
