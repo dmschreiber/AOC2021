@@ -22,13 +22,16 @@ import day20
 import day21
 import day22
 import day23
-
+import day24
 
 if __name__ == '__main__':
+    day24_input = "./data/day24.txt"
+    print("Day 24 part 1: {}".format(day24.part1(day24_input)))
+    exit(0)
+
     day23_input = "./data/day23.txt"
     # print("Day 23 part 1: {}".format(day23.part1(day23_input)))
     print("Day 23 part 2: {}".format(day23.part2(day23_input)))
-    exit(0)
 
     day22_input = "./data/day22.txt"
     print("Day 22 part 1: {}".format(day22.part1(day22_input)))

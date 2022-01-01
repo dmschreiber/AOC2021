@@ -1,0 +1,6 @@
+inp x
+add z x
+inp x
+add z x
+inp x
+add z x
