@@ -28,19 +28,32 @@ import day25
 
 if __name__ == '__main__':
     day25_input = "./data/day25.txt"
+    start_time = time.perf_counter()
     print("Day 25 part 1: {}".format(day25.part1(day25_input)))
-    exit(0)
+    end_time = time.perf_counter()
+    print(f"Day 25 execution Time : {end_time - start_time:0.6f}s")
+
 
     day24_input = "./data/day24.txt"
+    start_time = time.perf_counter()
     print("Day 24 part 1: {}".format(day24.part1(day24_input)))
+    print("Day 24 part 2: {}".format(day24.part2(day24_input)))
+    end_time = time.perf_counter()
+    print(f"Day 24 execution Time : {end_time - start_time:0.6f}s")
 
     day23_input = "./data/day23.txt"
-    # print("Day 23 part 1: {}".format(day23.part1(day23_input)))
+    start_time = time.perf_counter()
+    print("Day 23 part 1: {}".format(day23.part1(day23_input)))
     print("Day 23 part 2: {}".format(day23.part2(day23_input)))
+    end_time = time.perf_counter()
+    print(f"Day 23 execution Time : {end_time - start_time:0.6f}s")
 
     day22_input = "./data/day22.txt"
+    start_time = time.perf_counter()
     print("Day 22 part 1: {}".format(day22.part1(day22_input)))
     print("Day 22 part 2: {}".format(day22.part2(day22_input)))
+    end_time = time.perf_counter()
+    print(f"Day 22 execution Time : {end_time - start_time:0.6f}s")
 
     day21_input = "./data/day21.txt"
     start_time = time.perf_counter()

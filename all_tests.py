@@ -37,7 +37,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_day21(self):
         self.assertEqual(day21.part1("./data/day21_test.txt"),"739785")
-#        self.assertEqual(day21.part2("./data/day21_test.txt"),"444356092776315")
+        self.assertEqual(day21.part2("./data/day21_test.txt"),"444356092776315")
 
     def test_day1(self):
         self.assertEqual(day2.part1("./data/day2_test.txt"),"150")

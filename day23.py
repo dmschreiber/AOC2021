@@ -260,8 +260,10 @@ def play_game(locations, moves = None, power = 0, type = None, location = None, 
         available_moves = get_all_available_moves(locations)
 
         # prioritize moves into my room
-        # available_moves.sort(key=lambda x: 0 if x[2] in room[x[0]] else calculate_power(x[1], x[2], x[0]))
-        available_moves.sort(key=lambda x: 0 if x[2] in room[x[0]] else sort_order(x[0]))
+        if len(room["A"]) > 2:
+            available_moves.sort(key=lambda x: 0 if x[2] in room[x[0]] else sort_order(x[0]))
+        else:
+            available_moves.sort(key=lambda x: 0 if x[2] in room[x[0]] else calculate_power(x[1], x[2], x[0]))
 
         for available_move in available_moves:
             (move_type, move_location, next_location) = available_move
