@@ -10,7 +10,8 @@ class MyTestCase(unittest.TestCase):
         # self.assertEqual(day24.part1("./data/day24_test2.txt","123"),"6")
         # self.assertEqual(day24.part1("./data/day24_test3.txt","7"),"1")
         # self.assertEqual(day24.part1("./data/day24_test3.txt","2"),"0")
-        self.assertEqual(day24.part1("./data/day24.txt"),"0")
+        self.assertEqual(day24.part1("./data/day24.txt"),"94399898949951")
+        self.assertEqual(day24.part2("./data/day24.txt"),"21176121611511")
 
 if __name__ == '__main__':
     unittest.main()

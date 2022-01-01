@@ -88,10 +88,14 @@ def part1(input):
     options = new_options
     new_options = []
 
+    found = False
     for o in options:
+        if found:
+            break
+
         for i in range(99,11,-1):
-    # o = options[0]
-    # i  = 99
+            if found:
+                break
             option = o + str(i)
             if len(option) > 12:
                 print("options too big {}".format(option))
@@ -102,8 +106,9 @@ def part1(input):
             registers, xvalues = run_program(model_number, program)
 
             if registers["z"] == 0:
-                not_found = False
                 print("Found valid {}".format(model_number))
+                found = True
+
             if 0 < xvalues[12] < 10:
                 new_option = option+str(xvalues[12])
                 for j in range(9,0,-1):
@@ -112,13 +117,9 @@ def part1(input):
 
                     if registers["z"] == 0:
                         print("Found valid {}".format(model_number))
-                        return("0")
+                        found = True
 
-    right_answer = "9439989894995"
-    assert(len(right_answer)==len(new_options[0]))
-    assert(right_answer in new_options)
-
-    return(str(registers["z"]))
+    return(model_number)
 
 
 def run_program(number, program):
@@ -199,10 +200,104 @@ def load_program(input):
 
 
 def part2(input):
-    with open(input) as f:
-        depths = f.read().splitlines()
-    count = 0
+    program = load_program(input)
+    #              12345678901234
+    #              999XX9XX9X99XX
+    model_number = 11176161111111
+
+    options = []
+
+    # first 999XX9XX9X99XX
+    for i in range(111,1000):
+        option = str(i)
+        model_number = pad_string(option[0:4],14,"1")
+
+        if "0" not in str(model_number):
+            # print("trying {}".format(model_number))
+            registers, xvalues = run_program(model_number, program)
+            if registers["z"] == 0:
+                not_found = False
+                print("Found {}".format(model_number))
+            if 0 < xvalues[3] < 10 and \
+                    0 < xvalues[4] < 10:
+                options.append(option[0:3]+str(xvalues[3])+str(xvalues[4]))
+
+    assert("11176" in options)
+
+    new_options = []
+    for o in options:
+        for i in range(1,10):
+            option = o + str(i)
+            model_number = pad_string(option,14,"2")
+            # print("trying {}".format(model_number))
+            registers, xvalues = run_program(model_number, program)
+            # print(xvalues)
+            if registers["z"] == 0:
+                not_found = False
+                print("Found valid {}".format(model_number))
+            if 0 < xvalues[6] < 10 and \
+                    0 < xvalues[7] < 10:
+                new_options.append(option+str(xvalues[6])+str(xvalues[7]))
+
+    # print(options)
+    print(new_options)
+    options = new_options
+    new_options = []
+
+    for o in options:
+        for i in range(1,10):
+            option = o + str(i)
+            if len(option) > 9:
+                print("options too big")
+                exit(-1)
+
+            model_number = pad_string(option,14,"1")
+            registers, xvalues = run_program(model_number, program)
+            # print(xvalues)
+            if registers["z"] == 0:
+                not_found = False
+                print("Found valid {}".format(model_number))
+            if 0 < xvalues[9] < 10:
+                new_options.append(option+str(xvalues[9]))
+
+    #check status
+    print(new_options)
 
 
+    options = new_options
+    new_options = []
+    found = False
 
-    return(str(count))
+    for o in options:
+        if found:
+            break
+
+        for i in range(11,100):
+            if found:
+                break
+
+            option = o + str(i)
+            if len(option) > 12:
+                print("options too big {}".format(option))
+                exit(-1)
+
+            model_number = pad_string(option,14,"1")
+
+            registers, xvalues = run_program(model_number, program)
+
+            if registers["z"] == 0:
+                found = True
+                print("Found valid {}".format(model_number))
+
+            elif 0 < xvalues[12] < 10:
+                new_option = option+str(xvalues[12])
+                for j in range(1,10):
+                    model_number = pad_string(new_option, 14, str(j))
+                    registers, xvalues = run_program(model_number, program)
+
+                    if registers["z"] == 0:
+                        print("Found valid {}".format(model_number))
+                        found = True
+
+
+    return(model_number)
