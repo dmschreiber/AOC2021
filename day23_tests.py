@@ -27,7 +27,9 @@ import day23
 
 class MyTestCase(unittest.TestCase):
     def test_day23(self):
+        print("Running part 1")
         self.assertEqual(day23.part1("./data/day23_test.txt"),"12521")
+        print("Running part 2")
         self.assertEqual(day23.part2("./data/day23_test.txt"),"44169")
 
 

@@ -83,6 +83,14 @@ def part2(input):
     return(str(min_power))
 
 
+def copy_locations(locations):
+    new_locations = {}
+    for type in locations.keys():
+        new_locations[type] = locations[type].copy()
+
+    return new_locations
+
+
 def remove_available_spot(available, location):
     if location in available:
         available.remove(location)
@@ -224,15 +232,38 @@ def check_done(locations):
     return True
 
 
-def sort_order(type):
-    if type == "A":
-        return 1
-    elif type == "B":
+def power_required_next_move(locations, type, old_location, new_location):
+    location_copy = copy_locations(locations)
+    for l in range(len(location_copy[type])):
+        if location_copy[type][l] == old_location:
+            location_copy[type][l] = new_location
+    return min_power_required(location_copy)
+
+
+def sort_order(locations, type, old_location, new_location):
+    if new_location in room[type]:
+        return 0
+
+    location_copy = copy_locations(locations)
+    for l in range(len(location_copy[type])):
+        if location_copy[type][l] == old_location:
+            location_copy[type][l] = new_location
+
+    if available_spaces(location_copy, type, new_location) == []:
+        return energy["D"]*(len(room[type])+1+len(spots))
+
+    if True in [set([whats_where(location_copy, r) for r in room[each_type]]) == {None} for each_type in list("ABCD")]:
+        # print_detail(location_copy)
         return 2
-    elif type == "C":
-        return 2
-    elif type == "D":
-        return 1
+
+    return calculate_power(old_location, new_location, type)
+
+    if type in list("AD"):
+        return 3
+    if type in list("BC"):
+        return 4
+
+    # return min_power_required(location_copy)
 
 
 def play_game(locations, moves = None, power = 0, type = None, location = None, new_location = None, min_power = None):
@@ -243,37 +274,58 @@ def play_game(locations, moves = None, power = 0, type = None, location = None, 
     # print("Moves {}".format(len(moves)))
 
     if type is not None:
-        # print("Moving {} from {} to {}".format(type, location, new_location))
+        # if min_power == 12521:
+        #     print_detail(locations)
+        #     print("Moving {} from {} to {}".format(type, location, new_location))
+        #     print("Current power {}".format(power))
         move_power = move(locations, type, location, new_location)
 
     # print_detail(locations)
 
     if check_done(locations):
-        # print("DONE")
-        # if power+move_power < 44169:
-        #     print("{} v {} Moves {}".format(power+move_power,min_power,moves))
         if min_power is None or power+move_power < min_power:
             # print("Moves {}".format(moves))
+            min_power = power+move_power
             yield int(power + move_power)
 
-    elif min_power is None or min_power > move_power + power:
+    elif min_power is None or min_power > move_power + power + min_power_required(locations):
         available_moves = get_all_available_moves(locations)
 
         # prioritize moves into my room
-        if len(room["A"]) > 2:
-            available_moves.sort(key=lambda x: 0 if x[2] in room[x[0]] else sort_order(x[0]))
-        else:
-            available_moves.sort(key=lambda x: 0 if x[2] in room[x[0]] else calculate_power(x[1], x[2], x[0]))
+        available_moves.sort(key=lambda x: sort_order(locations, x[0], x[1], x[2]))
 
         for available_move in available_moves:
             (move_type, move_location, next_location) = available_move
-            new_locations = copy.deepcopy(locations)
-            # print("Play {} from {} to {}".format(move_type, move_location, next_location))
+            if min_power is not None and min_power <= move_power + power + power_required_next_move(locations, move_type, move_location, next_location):
+                break
+
+            new_locations = copy_locations(locations)
+
+            # if min_power == 12521:
+            #     print("Still looking for something less power={} with min_power_required={}".format(power+move_power, power_required_next_move(new_locations, move_type, move_location, next_location)))
+            #     print("Play {} from {} to {}".format(move_type, move_location, next_location))
+            #     print_detail(new_locations)
+
             for p in play_game(new_locations, moves.copy() + ["{}: {}->{}".format(move_type,move_location,next_location)], power + move_power, move_type, move_location, next_location, min_power):
                 if min_power is None or p < min_power:
                     min_power = p
                     # print("Min power {}".format(min_power))
                     yield p
+
+
+#calc min power required for everyoen to get to their rooms
+def min_power_required(locations, debug = False):
+    power_required = 0
+
+    for type in locations.keys():
+        for location in locations[type]:
+            if location not in room[type]:
+                if debug:
+                    print("location not in room - {} {}; requires {} power".format(type, location, calculate_power(location, room[type][0], type)))
+
+                power_required += calculate_power(location, room[type][0], type)
+
+    return power_required
 
 
 def get_all_available_moves(locations):
@@ -304,7 +356,9 @@ def print_detail(locations):
 
     for type in locations.keys():
         for location in locations[type]:
-            print("For {} at {} can move {}".format(type, location, available_spaces(locations, type, location)))
+            available_moves = available_spaces(locations, type, location)
+            available_moves.sort(key=lambda x: sort_order(locations, type, location, x))
+            print("For {} at {} can move {}".format(type, location, available_moves))
 
 
 def load_input(input):

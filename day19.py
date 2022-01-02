@@ -180,7 +180,7 @@ def find_offset(offset, pairs, scanners,which_scanner):
         found_scanner = True
 
     if found_scanner:
-        print("checking for matches with {}-{}".format(i,t))
+        # print("checking for matches with {}-{}".format(i,t))
         for j in range(len(scanners)):
             if i != j and j not in [mapping[1][0] for mapping in offset.keys()]:
                 for u in range(len(pairs[j])):
@@ -189,7 +189,7 @@ def find_offset(offset, pairs, scanners,which_scanner):
 
                         p = create_matches(pairs[i][t], pairs[j][u])
                         if p is not None:
-                            print("Scanner {} t {} with scanner {} t {} is {}".format(i, t, j, u, p))
+                            # print("Scanner {} t {} with scanner {} t {} is {}".format(i, t, j, u, p))
 
                             new_offset = offset.copy()
                             new_offset[ ((i,t),(j,u))] = p
