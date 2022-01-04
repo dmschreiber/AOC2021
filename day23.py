@@ -167,6 +167,8 @@ def available_spaces(locations, type, location):
         available = []
     # print("Available 2 {}".format(available))
 
+    if len(available) > 0 and max([a[0] for a in available]) > 0:
+        available = [(a[0],a[1]) for a in available if a[0] > 0]
 
     # available.sort(key=lambda x: manhattan_distance(x,location))
     # available.sort(reverse=True)
@@ -200,8 +202,11 @@ def move(locations, type, location, new_location):
     return power
 
 
-def calculate_power(location, new_location, type):
+def calculate_power(location, new_location, type, debug=False):
     distance = manhattan_distance(location, new_location)
+    if debug:
+        print(f"manhattan distance {location} to {new_location} - {distance}")
+
     if location[0] == new_location[0] == 1:
         distance += 2
     elif location[0] == new_location[0] == 2:
@@ -214,6 +219,10 @@ def calculate_power(location, new_location, type):
         distance += 2
     elif min(location[0], new_location[0]) >= 1 and max(location[0], new_location[0]) >= 1:
         distance += min(location[0], new_location[0])*2
+
+    if debug:
+        print(f"final distance {distance}")
+
     power = energy[type] * distance
     return power
 
@@ -240,30 +249,58 @@ def power_required_next_move(locations, type, old_location, new_location):
     return min_power_required(location_copy)
 
 
+def sum_of_how_close_to_home(locations):
+    total = 0
+    for type in ["A","B","C","D"]:
+        for location in locations[type]:
+            total += abs(location[1] - room[type][0][1])
+
+    return total
+
+
 def sort_order(locations, type, old_location, new_location):
+
     if new_location in room[type]:
         return 0
 
     location_copy = copy_locations(locations)
+
     for l in range(len(location_copy[type])):
         if location_copy[type][l] == old_location:
             location_copy[type][l] = new_location
 
+    if True in [set([whats_where(location_copy, r) for r in room[each_type]]) == {None} for each_type in list("ABCD")]:
+        # print_detail(location_copy)
+        return 1
+
+    # if type in list("AD"):
+    #     return 3
+    # if type in list("BC"):
+    #     return 4
+
+    # return min_power_required(location_copy)
+
+    # return sum_of_how_close_to_home(location_copy)
+
+    if type=="A":
+        return abs(new_location[1]-3)
+    elif type=="B":
+        return abs(new_location[1]-5)
+    elif type=="C":
+        return abs(new_location[1]-7)
+    elif type=="D":
+        return abs(new_location[1]-9)
+
+
     if available_spaces(location_copy, type, new_location) == []:
         return energy["D"]*(len(room[type])+1+len(spots))
 
-    if True in [set([whats_where(location_copy, r) for r in room[each_type]]) == {None} for each_type in list("ABCD")]:
-        # print_detail(location_copy)
-        return 2
 
-    return calculate_power(old_location, new_location, type)
+    # return sum_of_how_close_to_home(location_copy)
 
-    if type in list("AD"):
-        return 3
-    if type in list("BC"):
-        return 4
+    # return calculate_power(old_location, new_location, type)
 
-    # return min_power_required(location_copy)
+
 
 
 def play_game(locations, moves = None, power = 0, type = None, location = None, new_location = None, min_power = None):
@@ -293,15 +330,19 @@ def play_game(locations, moves = None, power = 0, type = None, location = None, 
 
         # prioritize moves into my room
         available_moves.sort(key=lambda x: sort_order(locations, x[0], x[1], x[2]))
-
+        # print("Available moves {}".format(available_moves))
+        # print_detail(locations)
+        # exit(-1)
         for available_move in available_moves:
             (move_type, move_location, next_location) = available_move
-            if min_power is not None and min_power <= move_power + power + power_required_next_move(locations, move_type, move_location, next_location):
+            if min_power is not None and min_power <= move_power + power:
                 break
+            if min_power is not None and min_power <= move_power + power + power_required_next_move(locations, move_type, move_location, next_location):
+                continue
 
             new_locations = copy_locations(locations)
 
-            # if min_power == 12521:
+            # if min_power == 13558:
             #     print("Still looking for something less power={} with min_power_required={}".format(power+move_power, power_required_next_move(new_locations, move_type, move_location, next_location)))
             #     print("Play {} from {} to {}".format(move_type, move_location, next_location))
             #     print_detail(new_locations)
@@ -316,14 +357,24 @@ def play_game(locations, moves = None, power = 0, type = None, location = None, 
 #calc min power required for everyoen to get to their rooms
 def min_power_required(locations, debug = False):
     power_required = 0
+    how_many_outside_rooms = {}
+
+    for type in list("ABCD"):
+        how_many_outside_rooms[type] = 0
 
     for type in locations.keys():
         for location in locations[type]:
             if location not in room[type]:
                 if debug:
-                    print("location not in room - {} {}; requires {} power".format(type, location, calculate_power(location, room[type][0], type)))
+                    print("location not in room - {}/{} {}; requires {} power to move to {}".format(type, how_many_outside_rooms[type], location, calculate_power(location, room[type][how_many_outside_rooms[type]], type, debug), room[type][how_many_outside_rooms[type]]))
 
-                power_required += calculate_power(location, room[type][0], type)
+                power_required += calculate_power(location, room[type][how_many_outside_rooms[type]], type)
+                how_many_outside_rooms[type] += 1
+
+    # if max([how_many_outside_rooms[type] for type in list("ABCD")]) > 1 and not debug:
+    #     print_detail(locations)
+    #     min_power_required(locations, True)
+    #     exit(-1)
 
     return power_required
 

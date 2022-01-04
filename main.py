@@ -44,9 +44,12 @@ if __name__ == '__main__':
     day23_input = "./data/day23.txt"
     start_time = time.perf_counter()
     print("Day 23 part 1: {}".format(day23.part1(day23_input)))
+    end_time = time.perf_counter()
+    print(f"Day 23 part 1 execution Time : {end_time - start_time:0.6f}s")
+    start_time = time.perf_counter()
     print("Day 23 part 2: {}".format(day23.part2(day23_input)))
     end_time = time.perf_counter()
-    print(f"Day 23 execution Time : {end_time - start_time:0.6f}s")
+    print(f"Day 23 part 2 execution Time : {end_time - start_time:0.6f}s")
 
     day22_input = "./data/day22.txt"
     start_time = time.perf_counter()
